@@ -48,7 +48,7 @@ function main() {
         }
     }
 }
-function findRating(response, splitnames) {
+function findRating(response, splitnames) { //get the link to prof RMP page
     let RMPLink
     let rmpFirstName
     let initial
@@ -60,17 +60,11 @@ function findRating(response, splitnames) {
     let responseProfs = div.getElementsByClassName("listing PROFESSOR") //all professors present in the RMP listing
 
     for (let i = 0; i < splitnames.length; i++) {
-        let hyphenCheck = splitnames[i][1].split(" ") //get the initial and last name of the professors in class search page
         initial = splitnames[i][0].substring(0, 1)
         lastname = splitnames[i][1].toUpperCase()
 
-
-        // let doc = document.createElement("div")
-        // doc.innerHTML = responseProfs.innerHTML
-
         let name = div.getElementsByClassName("main")[0].innerHTML
-        //console.log(name)
-        rmpLastName = name.split(",")[0].toUpperCase() //
+        rmpLastName = name.split(",")[0].toUpperCase() 
 
         rmpFirstName = name.split(",")[1].charAt(1) //initial 
 
@@ -93,8 +87,7 @@ function findRating(response, splitnames) {
 }
 
 
-function addRating() { 
-    //inject rating into webportal
+function addRating() {  //add rating into webportal
 
 }
 
