@@ -1,4 +1,5 @@
 function main() {
+    //gh
     let listProfs = []
     let professers
     let count = 0
@@ -31,8 +32,8 @@ function main() {
         if (slicedName.localeCompare("") != 0) {
             listProfs.push(slicedName)
             // listProfs.forEach(element => {
-            var extract = slicedName.match(/>(.*?)</).pop().split(" ");
-            splitnames.push(extract)
+            let extract = slicedName.match(/>(.*?)</).pop().split(" "); //extract name from HTML
+            splitnames.push(extract) //2d array where first name is at index 0 and last at index 1
             // });
             let searchURL = "http://www.ratemyprofessors.com/search.jsp?queryBy=teacherName&schoolName=San+Diego+State+University&queryoption=HEADER&query=" + splitnames[i][1] + "&facetSearch=true"; //url not formatted correctly
 
@@ -48,16 +49,14 @@ function main() {
         }
     }
 }
-function findRating(response, splitnames) { //get the link to prof RMP page
-    let RMPLink
+function findRating(response, splitnames) { //get the link to prof RMP
+    let RMPLink 
     let rmpFirstName
     let initial
     let lastname
     let rmpLastName
     let div = document.createElement("div")
     div.innerHTML = response
-
-    let responseProfs = div.getElementsByClassName("listing PROFESSOR") //all professors present in the RMP listing
 
     for (let i = 0; i < splitnames.length; i++) {
         initial = splitnames[i][0].substring(0, 1)
