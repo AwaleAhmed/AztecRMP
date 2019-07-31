@@ -8,7 +8,9 @@ function main() {
     ratingColumn.innerHTML = "Rating"
     ratingColumn.className = "ratings column"
     secRows.appendChild(ratingColumn)
-    
+
+    //don't need link header 
+
     let secMeetings = document.getElementsByClassName("sectionMeeting")
     let splitnames = []
     for (let i = 0; i < secMeetings.length; i++) {
