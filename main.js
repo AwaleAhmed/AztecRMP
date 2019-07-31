@@ -8,13 +8,7 @@ function main() {
     ratingColumn.innerHTML = "Rating"
     ratingColumn.className = "ratings column"
     secRows.appendChild(ratingColumn)
-
-    let link = document.createElement("div")
-    link.innerHTML = ("Link")
-    link.className = "link column"
-    link.style.color = "blue"
-    secRows.appendChild(link)
-
+    
     let secMeetings = document.getElementsByClassName("sectionMeeting")
     let splitnames = []
     for (let i = 0; i < secMeetings.length; i++) {
