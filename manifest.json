@@ -1,0 +1,22 @@
+{
+	"manifest_version": 2, 
+ 	"name": "RateMyProfessor For Aztecs",
+ 	"version": "1.0",
+ 	"author": "Awale Ahmed",
+	"permissions": [
+		"http://www.ratemyprofessors.com/*",
+		"tabs"
+	],
+
+ 	"background": { 
+    	"scripts": ["background.js"],
+    	"persistent": false
+  	},
+
+ 	"content_scripts": [
+		{
+		"matches": ["https://sunspot.sdsu.edu/schedule/*"],
+		"js": ["main.js"]
+	 	}
+ 	 ]
+}
