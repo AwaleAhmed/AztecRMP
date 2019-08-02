@@ -86,6 +86,7 @@ function findRating(response, splitnames) { //get the link to prof RMP
 
 
 function addRating(responseText, RMPLink) {  //add rating into webportal
+    console.log("run how many times")
     let page = document.createElement("div")
     page.innerHTML = responseText;
     let gradeSearch = page.getElementsByClassName("grade")
@@ -93,7 +94,8 @@ function addRating(responseText, RMPLink) {  //add rating into webportal
     let scale = "/5"
     let rmpFirstName = page.getElementsByClassName("pfname")
     let rmpInitial = rmpFirstName[0].innerHTML.charAt(1) //firstName, INITIAL AT INDEX 1
-    let rmpLastName = page.getElementsByClassName("plname")
+    let rmpLastName = page.getElementsByClassName("plname")[0].innerHTML.slice(19).toUpperCase()
+    rmpLastName = rmpLastName.substring(0, rmpLastName.length-17)
     console.log(secMeetings)
 
 
@@ -102,10 +104,11 @@ function addRating(responseText, RMPLink) {  //add rating into webportal
         let instructorname = instructor[0].innerText.slice(0, -1)
         let str = instructorname.split(" ")
         let webportalfirst = str[0].charAt(0)
-        let webportallast = str[1].toUpperCase
+        let webportallast = str[1].toUpperCase()
+ 
         if (rmpInitial.localeCompare(webportalfirst) == 0 && rmpLastName.localeCompare(webportallast) == 0) {
-            secMeetings[i].getElementsByClassName("ratings column").innerText = grade.concat(scale)
             console.log("test")
+            secMeetings[i].getElementsByClassName("ratings position")[0].innerHTML = grade.concat(scale)
         }
     }
 
