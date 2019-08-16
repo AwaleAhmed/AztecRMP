@@ -1,8 +1,7 @@
-//gh
 let listProfs = []
 let professers
 let count = 0
-let secRows = document.getElementById("sectionRowTitles")
+let secRows = document.getElementById("sectionRowTitles") //from SDSU Webportal 
 
 let ratingColumn = document.createElement("div")
 ratingColumn.innerHTML = "Rating"
@@ -17,8 +16,6 @@ function main() {
         let rating = document.createElement("div")
         rating.className = "ratings position" //create rating spot for every section meeting 
         secMeetings[i].appendChild(rating)
-
-
         let link = document.createElement("div")
         link.className = "link column"
         secMeetings[i].appendChild(link)
@@ -34,7 +31,6 @@ function main() {
             splitnames.push(extract) //2d array where first name is at index 0 and last at index 1
             // });
             let searchURL = "http://www.ratemyprofessors.com/search.jsp?queryBy=teacherName&schoolName=San+Diego+State+University&queryoption=HEADER&query=" + splitnames[i][1] + "&facetSearch=true"; //url not formatted correctly
-
             chrome.runtime.sendMessage({
                 url: searchURL
             }, function (responseText) {
@@ -47,6 +43,7 @@ function main() {
         }
     }
 }
+
 function findRating(response, splitnames) { //get the link to prof RMP
     let RMPLink
     let rmpFirstName
@@ -55,31 +52,28 @@ function findRating(response, splitnames) { //get the link to prof RMP
     let rmpLastName
     let div = document.createElement("div")
     div.innerHTML = response
+    let id = div.getElementsByClassName("listing PROFESSOR")
 
     for (let i = 0; i < splitnames.length; i++) {
         initial = splitnames[i][0].substring(0, 1)
         lastname = splitnames[i][1].toUpperCase()
-        //console.log(div.innerHTML)
         let name = div.getElementsByClassName("main")[0].innerHTML
-        let id = div.getElementsByClassName("listing PROFESSOR")
         rmpLastName = name.split(",")[0].toUpperCase()
 
         rmpFirstName = name.split(",")[1].charAt(1) //initial 
         if (lastname.localeCompare(rmpLastName) == 0 && initial.localeCompare(rmpFirstName) == 0) {
             let fullLink = document.createElement("div")
-            fullLink.innerHTML = id[i].innerHTML
+            fullLink.innerHTML = id[0].innerHTML 
             let aTag = fullLink.getElementsByTagName("a")
+            console.log(aTag[0])
             RMPLink = 'http://www.ratemyprofessors.com/' + aTag[0].href.slice(25) //link is directly to professors page, instead of search page like before
+            console.log("RMPLINK: " + RMPLink)
             chrome.runtime.sendMessage({
                 url: RMPLink
             }, function (responseText, RMPLink) {
-                //console.log(responseText)
                 addRating(responseText, RMPLink)
             })
         }
-
-
-
     }
 
 }
@@ -93,10 +87,9 @@ function addRating(responseText, RMPLink) {  //add rating into webportal
     let grade = gradeSearch[0].innerHTML
     let scale = "/5"
     let rmpFirstName = page.getElementsByClassName("pfname")
-    let rmpInitial = rmpFirstName[0].innerHTML.charAt(1) //firstName, INITIAL AT INDEX 1
+    let rmpInitial = rmpFirstName[0].innerHTML.charAt(1) 
     let rmpLastName = page.getElementsByClassName("plname")[0].innerHTML.slice(19).toUpperCase()
-    rmpLastName = rmpLastName.substring(0, rmpLastName.length-17)
-    console.log(secMeetings)
+    rmpLastName = rmpLastName.substring(0, rmpLastName.length - 17)
 
 
     for (i = 0; i < secMeetings.length; i++) {
@@ -105,7 +98,7 @@ function addRating(responseText, RMPLink) {  //add rating into webportal
         let str = instructorname.split(" ")
         let webportalfirst = str[0].charAt(0)
         let webportallast = str[1].toUpperCase()
- 
+
         if (rmpInitial.localeCompare(webportalfirst) == 0 && rmpLastName.localeCompare(webportallast) == 0) {
             console.log("test")
             secMeetings[i].getElementsByClassName("ratings position")[0].innerHTML = grade.concat(scale)
