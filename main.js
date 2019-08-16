@@ -26,10 +26,8 @@ function main() {
         let slicedName = professers[i + 1].innerHTML.slice(0, -1) //cut off unneeded char at end
         if (slicedName.localeCompare("") != 0) {
             listProfs.push(slicedName)
-            // listProfs.forEach(element => {
             let extract = slicedName.match(/>(.*?)</).pop().split(" "); //extract name from HTML
             splitnames.push(extract) //2d array where first name is at index 0 and last at index 1
-            // });
             let searchURL = "http://www.ratemyprofessors.com/search.jsp?queryBy=teacherName&schoolName=San+Diego+State+University&queryoption=HEADER&query=" + splitnames[i][1] + "&facetSearch=true"; //url not formatted correctly
             chrome.runtime.sendMessage({
                 url: searchURL
@@ -65,7 +63,6 @@ function findRating(response, splitnames) { //get the link to prof RMP
             let fullLink = document.createElement("div")
             fullLink.innerHTML = id[0].innerHTML 
             let aTag = fullLink.getElementsByTagName("a")
-            console.log(aTag[0])
             RMPLink = 'http://www.ratemyprofessors.com/' + aTag[0].href.slice(25) //link is directly to professors page, instead of search page like before
             console.log("RMPLINK: " + RMPLink)
             chrome.runtime.sendMessage({
@@ -80,7 +77,6 @@ function findRating(response, splitnames) { //get the link to prof RMP
 
 
 function addRating(responseText, RMPLink) {  //add rating into webportal
-    console.log("run how many times")
     let page = document.createElement("div")
     page.innerHTML = responseText;
     let gradeSearch = page.getElementsByClassName("grade")
@@ -100,7 +96,6 @@ function addRating(responseText, RMPLink) {  //add rating into webportal
         let webportallast = str[1].toUpperCase()
 
         if (rmpInitial.localeCompare(webportalfirst) == 0 && rmpLastName.localeCompare(webportallast) == 0) {
-            console.log("test")
             secMeetings[i].getElementsByClassName("ratings position")[0].innerHTML = grade.concat(scale)
         }
     }
