@@ -11,6 +11,7 @@ professers = document.getElementsByClassName("sectionFieldInstructor")
 
 let secMeetings = document.getElementsByClassName("sectionMeeting")
 let splitnames = []
+
 function main() {
     for (let i = 0; i < secMeetings.length; i++) {
         let rating = document.createElement("div")
@@ -64,7 +65,6 @@ function findRating(response, splitnames) { //get the link to prof RMP
             fullLink.innerHTML = id[0].innerHTML 
             let aTag = fullLink.getElementsByTagName("a")
             RMPLink = 'http://www.ratemyprofessors.com/' + aTag[0].href.slice(25) //link is directly to professors page, instead of search page like before
-            console.log("RMPLINK: " + RMPLink)
             chrome.runtime.sendMessage({
                 url: RMPLink
             }, function (responseText, RMPLink) {
